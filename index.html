@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css" class="rel">
+    <link rel="icon" href="img/web.jpg">
+    <title>Whack-a-Mole</title>
+</head>
+<body>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Whack-a-Mole - Level Selection</title>
+        <style>
+            /* Your CSS here */
+            .level {
+                display: flex;
+                background-color: blue;
+                justify-content: center;
+                align-items: center;
+                height: 100px;
+                width: 200px;
+                margin: 20px;
+                border: 8px solid #000;
+                border-radius: 10px;
+                font-size: 24px;
+                text-align: center;
+                cursor: pointer;
+            }
+            .level:hover{
+                box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+                transform: translateY(-5px);
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Whack-a-Mole - Level Selection</h1>
+        <div class="level" onclick="level1(1)">Level 1</div>
+        <div class="level" onclick="level2(2)">Level 2</div>
+        <div class="level" onclick="startGame(3)">Level 3</div>
+        <!-- Add more levels as needed -->
+    
+        <script>
+            function level1(level) {
+                // Redirect to the game page with the selected level
+                window.location.href = 'level1.html?level=' + level; // Replace 'game.html' with your game page
+        
+            }
+            function level2(level) {
+                // Redirect to the game page with the selected level
+                window.location.href = 'level2.html?level=' + level; // Replace 'game.html' with your game page
+        
+            }
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css" class="rel">
+    <link rel="icon" href="img/web.jpg">
+    <title>Whack-a-Mole</title>
+</head>
+<body>
+    <h1>Whack-a-Wackk Level 3</h1>
+    <div class="container" id="container">
+        <!-- Grid of holes will be created here -->
+    </div>
+    <p>Score: <span id="score">0</span></p>
+    <p>Time Left: <span id="time">12</span> seconds</p>
+    <button onclick="startGame()">Start</button>
+    <button onclick="homePage()">Home</button>
+    <button onclick="resetGame()">Reset</button>
+
+    <div class="popup" id="popup">
+        <p>Game Over! Final Score: <span id="finalScore">0</span></p>
+        <button onclick="closePopup()">Close</button>
+        <button onclick="homePage()">Home</button>
+    </div>
+
+    <script>
+        let score = 0;
+        let timeLeft = 12;
+        let unlockedLevels = 1;
+        let gameInterval;
+        let timeInterval;
+        let highScores = [];
+        
+        const gameBoard = document.getElementById('gameBoard');
+        const scoreElement = document.getElementById('score');
+        const timeElement = document.getElementById('time');
+        const unlockedLevelsElement = document.getElementById('unlockedLevels');
+        const popup = document.getElementById('popup');
+        const finalScore = document.getElementById('finalScore');
+        const playerNameInput = document.getElementById('playerName');
+        const holes = [];
+
+        function homePage() {
+            // Redirect to the game page with the selected level
+            window.location.href = 'index.html?level';
+        }
+
+        function openPopup() {
+            popup.style.display = 'block';
+            finalScore.textContent = score;
+        }
+
+        function closePopup() {
+            popup.style.display = 'none';
+        }
+       
+        for (let i = 0; i < 12; i++) {
+            const hole = document.createElement('div');
+            hole.classList.add('hole');
+            hole.addEventListener('click', whack);
+            container.appendChild(hole);
+            holes.push(hole);
+        }
+
+
+        function whack() {
+            if (this.classList.contains('mole')) {
+                score++;
+                scoreElement.textContent = score;
+                this.classList.remove('mole');
+            }
+        }
+
+        function startGame() {
+            if (gameInterval) clearInterval(gameInterval);
+            if (timeInterval) clearInterval(timeInterval);
+            timeLeft = 12;
+            timeElement.textContent = timeLeft;
+
+            gameInterval = setInterval(() => {
+                const currentMoles = document.getElementsByClassName('mole');
+                if (currentMoles.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * 12);
+                    currentMoles[randomIndex].classList.remove('mole');
+                }
+                
+
+                const index = Math.floor(Math.random() * 12);
+                holes[index].classList.add('mole');
+                setTimeout(() => {
+                    holes[index].classList.remove('mole');
+                }, 500);
+            }, 500);
+
+            timeInterval = setInterval(() => {
+                timeLeft--;
+                timeElement.textContent = timeLeft;
+                if (timeLeft === 0) {
+                    openPopup();
+                    stopGame();
+                }
+            }, 1000);
+        }
+
+        function stopGame() {
+            clearInterval(gameInterval);
+            clearInterval(timeInterval);
+        }
+
+        function resetGame() {
+            clearInterval(gameInterval);
+            clearInterval(timeInterval);
+            score = 0;
+            scoreElement.textContent = score;
+            timeLeft = 10;
+            timeElement.textContent = timeLeft;
+            const currentMoles = document.getElementsByClassName('mole');
+            while (currentMoles.length > 0) {
+                currentMoles[0].classList.remove('mole');
+            }
+        }
+    </script>
+</body>
+</html>
